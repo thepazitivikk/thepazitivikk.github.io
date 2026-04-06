@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect</title>
+  <script>
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+
+      if (token) {
+        const url = "happ://add/https://sub.mynewconnectreal.lol/sub/" + token;
+        window.location.href = url;
+      }
+    };
+  </script>
+</head>
+<body>
+  <p>Если не открылось — нажми:</p>
+  <a id="link">Открыть</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (token) {
+      const url = "happ://add/https://sub.mynewconnectreal.lol/sub/" + token;
+      document.getElementById("link").href = url;
+    }
+  </script>
+</body>
+</html>
