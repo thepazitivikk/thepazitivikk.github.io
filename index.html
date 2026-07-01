@@ -1,183 +1,172 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyNewConnect</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата подтверждена</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:'Inter',sans-serif;
-  background:linear-gradient(135deg,#0b0f17,#121828);
-  color:#fff;
-}
+        body {
+            background: #f4f6fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            padding: 1.5rem;
+        }
 
-.card{
-  width:100%;
-  max-width:400px;
-  background:rgba(20,28,45,0.9);
-  border-radius:24px;
-  padding:32px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
-}
+        .card {
+            max-width: 720px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2.5rem;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 30, 0.12);
+            transition: transform 0.2s ease;
+            text-align: center;
+        }
 
-h1{
-  font-size:24px;
-  margin-bottom:8px;
-  font-weight:600;
-}
+        .graphic {
+            font-size: 8rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.2rem;
+            letter-spacing: 0.1em;
+            color: #0b1e2b;
+            opacity: 0.9;
+            user-select: none;
+        }
 
-.sub{
-  font-size:13px;
-  color:rgba(255,255,255,0.55);
-  margin-bottom:24px;
-}
+        .check-mark {
+            display: inline-block;
+            width: 7rem;
+            height: 7rem;
+            background: #e6f0f5;
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto 1.8rem auto;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02);
+        }
 
-.btn{
-  display:block;
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  font-size:14px;
-  font-weight:500;
-  margin-bottom:12px;
-  cursor:pointer;
-  border:none;
-  transition:.18s;
-}
+        .check-mark::after {
+            content: "✔";
+            font-size: 4.8rem;
+            font-weight: 300;
+            color: #1d4a5e;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.9;
+        }
 
-.primary{
-  background:linear-gradient(135deg,#00e5a0,#00b8ff);
-  color:#041018;
-  font-weight:600;
-  box-shadow:0 4px 16px rgba(0,229,160,0.25);
-}
+        .title {
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            color: #0b1e2b;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
 
-.primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(0,229,160,0.35);
-}
+        .sub {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #375b6b;
+            margin-bottom: 2.8rem;
+            letter-spacing: 0.01em;
+            border-bottom: 1px solid #eef4f8;
+            padding-bottom: 1.8rem;
+        }
 
-.secondary{
-  background:rgba(255,255,255,0.08);
-  color:#fff;
-  border:1px solid rgba(255,255,255,0.12);
-}
+        .btn {
+            display: inline-block;
+            background: #0b1e2b;
+            color: white;
+            font-weight: 400;
+            font-size: 1.2rem;
+            padding: 1rem 3.2rem;
+            border-radius: 60px;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+            transition: all 0.2s ease;
+            border: 1px solid #0b1e2b;
+            box-shadow: 0 4px 10px rgba(11, 30, 43, 0.05);
+        }
 
-.secondary:hover{
-  background:rgba(255,255,255,0.12);
-}
+        .btn:hover {
+            background: #1d3d4f;
+            border-color: #1d3d4f;
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(11, 30, 43, 0.12);
+        }
 
-.section{
-  margin-top:20px;
-  padding-top:14px;
-  border-top:1px solid rgba(255,255,255,0.08);
-}
+        .btn:active {
+            transform: scale(0.97);
+        }
 
-.section-title{
-  font-size:12px;
-  color:rgba(255,255,255,0.45);
-  margin-bottom:10px;
-}
+        .footnote {
+            margin-top: 2.2rem;
+            font-size: 0.9rem;
+            color: #6f8b9b;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            opacity: 0.7;
+        }
 
-.notify{
-  margin-top:10px;
-  font-size:12px;
-  color:#00e5a0;
-  min-height:18px;
-}
-
-.footer{
-  margin-top:16px;
-  font-size:10px;
-  color:rgba(255,255,255,0.45);
-}
-
-.footer a{
-  color:#00e5a0;
-  text-decoration:none;
-}
-</style>
+        @media (max-width: 500px) {
+            .card {
+                padding: 2rem 1.5rem;
+            }
+            .title {
+                font-size: 2.4rem;
+            }
+            .graphic {
+                font-size: 5.5rem;
+            }
+            .check-mark {
+                width: 5.5rem;
+                height: 5.5rem;
+            }
+            .check-mark::after {
+                font-size: 3.6rem;
+            }
+            .btn {
+                padding: 0.8rem 2.4rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="card">
+        <div class="graphic">
+            <span>⏤</span>
+            <span>⏤</span>
+            <span>⏤</span>
+        </div>
 
-<div class="card">
+        <div class="check-mark"></div>
 
-<h1>Подключение к VPN</h1>
-<div class="sub">Happ — основной клиент. Остальные опционально.</div>
+        <h1 class="title">Вы оплатили.</h1>
 
-<button class="btn primary" id="auto">Открыть Happ автоматически</button>
-<button class="btn secondary" id="happ">Открыть Happ</button>
-<button class="btn secondary" id="hiddify">Hiddify</button>
-<button class="btn secondary" id="v2ray">V2RayTun</button>
-<button class="btn secondary" id="copy">Скопировать ссылку</button>
+        <div class="sub">Вернитесь на сервер</div>
 
-<div id="notify" class="notify"></div>
+        <a href="#" class="btn">На сервер</a>
 
-<div class="section">
-  <div class="section-title">Скачать приложения</div>
-  <a class="btn primary" href="https://play.google.com/store/apps/details?id=org.happ.wine">Happ (Android)</a>
-  <a class="btn primary" href="https://apps.apple.com/us/app/happ-wine/id1534503730">Happ (iOS)</a>
-  <a class="btn secondary" href="https://play.google.com/store/apps/details?id=app.hiddify.com">Hiddify (Android)</a>
-  <a class="btn secondary" href="https://github.com/hiddify/hiddify-app/releases/latest">Hiddify APK</a>
-  <a class="btn secondary" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532">Hiddify (iOS)</a>
-</div>
-
-<div class="footer">
-made by <a href="#">@thepaz</a>
-</div>
-
-</div>
-
-<script>
-const p=new URLSearchParams(location.search);
-const t=p.get("token");
-const sub=t?"https://sub.mynewconnectreal.lol/sub/"+t:null;
-
-const urls={
-  happ:sub?"happ://add/"+sub:null,
-  hiddify:sub?"hiddify://import/"+sub:null,
-  v2ray:sub?"v2raytun://import/"+sub:null
-};
-
-function show(text){
-  const n=document.getElementById("notify");
-  n.textContent=text;
-  setTimeout(()=>{if(n.textContent===text)n.textContent=""},2000);
-}
-
-function openApp(url){
-  if(!url){show("Ошибка ссылки");return;}
-  show("Открытие приложения...");
-  const iframe=document.createElement("iframe");
-  iframe.style.display="none";
-  iframe.src=url;
-  document.body.appendChild(iframe);
-  setTimeout(()=>{window.location.href=url},800);
-}
-
-auto.onclick=()=>{
-  openApp(urls.happ);
-  setTimeout(()=>openApp(urls.hiddify),1200);
-  setTimeout(()=>openApp(urls.v2ray),2000);
-};
-
-happ.onclick=()=>openApp(urls.happ);
-hiddify.onclick=()=>openApp(urls.hiddify);
-v2ray.onclick=()=>openApp(urls.v2ray);
-
-copy.onclick=()=>{
-  if(!sub){show("Нет ссылки");return;}
-  navigator.clipboard.writeText(sub).then(()=>show("Скопировано!"));
-};
-</script>
-
+        <div class="footnote">· не несет юридической силы ·</div>
+    </div>
 </body>
 </html>
