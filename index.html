@@ -2,19 +2,19 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0b0f19">
-  <title>GisConnect — Быстрое подключение</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>GisConnect</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card: #131a2a;
-      --card-border: rgba(255, 255, 255, 0.08);
-      --text: #f3f6fc;
-      --muted: #8b98b1;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --success: #10b981;
+      --bg: #000000;
+      --surface: #0d1017;
+      --surface-2: #151a24;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --muted: #8a94a6;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
     }
 
     * {
@@ -24,174 +24,238 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(circle at 50% 0%, #172554 0%, var(--bg) 65%);
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000000;
       color: var(--text);
-      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: #000000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      z-index: 100;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
     }
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 28px 22px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      text-align: center;
+    .splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
 
-    .logo-badge {
-      width: 64px;
-      height: 64px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      display: inline-flex;
+    .spinner {
+      width: 42px;
+      height: 42px;
+      border: 3px solid rgba(255, 255, 255, 0.16);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .page {
+      min-height: 100%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+      padding: 24px 18px;
+      background: radial-gradient(circle at 50% -10%, rgba(37, 99, 235, 0.22), transparent 55%), #000000;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
+    .page.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .subtitle {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.45;
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px 22px 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       margin-bottom: 22px;
     }
 
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 5px;
-      border-radius: 14px;
-      margin-bottom: 20px;
+    .icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
     }
 
-    .tab {
+    .header-meta h1 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 3px;
+    }
+
+    .header-meta p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #07090e;
+      border: 1px solid var(--border);
+      padding: 4px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+    }
+
+    .seg-btn {
       border: none;
       background: transparent;
       color: var(--muted);
       font-size: 14px;
       font-weight: 600;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 11px 10px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
-    .tab.active {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    .seg-btn.active {
+      background: var(--surface-2);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
-    .btn {
+    .primary-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       width: 100%;
-      padding: 15px 18px;
-      border-radius: 14px;
-      font-size: 16px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+      color: #ffffff;
+      font-size: 15px;
       font-weight: 600;
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: transform 0.12s, background 0.2s;
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.35);
+      transition: transform 0.12s ease, opacity 0.2s ease;
       margin-bottom: 10px;
     }
 
-    .btn:active {
-      transform: scale(0.98);
+    .primary-btn:active,
+    .secondary-btn:active {
+      transform: scale(0.985);
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-hover);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .secondary-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: #ffffff;
       font-size: 14px;
-      padding: 13px 16px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.2s ease;
     }
 
     .divider {
       height: 1px;
-      background: var(--card-border);
-      margin: 18px 0;
+      background: var(--border);
+      margin: 20px 0 18px;
     }
 
-    .step-hint {
-      font-size: 13px;
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
       color: var(--muted);
       margin-bottom: 10px;
     }
 
     .platforms {
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      margin-top: 10px;
-      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
 
     .plat-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: #07090e;
+      border: 1px solid var(--border);
       color: var(--muted);
       font-size: 12px;
-      padding: 6px 11px;
-      border-radius: 8px;
+      font-weight: 600;
+      padding: 9px 4px;
+      border-radius: 11px;
       cursor: pointer;
+      transition: all 0.18s ease;
     }
 
     .plat-btn.active {
-      color: var(--text);
-      border-color: var(--accent);
-      background: rgba(59, 130, 246, 0.15);
+      color: #ffffff;
+      border-color: rgba(59, 130, 246, 0.6);
+      background: rgba(37, 99, 235, 0.16);
     }
 
-    .url-box {
-      margin-top: 14px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.25);
+    .key-box {
+      margin-top: 16px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      background: #07090e;
+      border: 1px solid var(--border);
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--muted);
       word-break: break-all;
       user-select: all;
     }
 
-    .error-msg {
-      color: #f87171;
+    .empty-state {
+      text-align: center;
+      padding: 14px 4px 4px;
+      color: var(--muted);
       font-size: 14px;
-      margin: 16px 0;
+      line-height: 1.5;
     }
 
     .hidden {
@@ -200,47 +264,56 @@
   </style>
 </head>
 <body>
-  <main class="container">
-    <div class="logo-badge" id="appBadge">⚡</div>
-    <h1 id="titleText">Подключение GisConnect</h1>
-    <p class="subtitle" id="subtitleText">
-      Открываем приложение и добавляем вашу подписку автоматически…
-    </p>
+  <div class="splash" id="splash">
+    <div class="spinner"></div>
+  </div>
 
-    <div id="errorBox" class="error-msg hidden">
-      Ссылка подписки не передана. Вернитесь в Telegram-бот и нажмите кнопку подключения заново.
-    </div>
-
-    <div id="mainContent">
-      <div class="tabs">
-        <button type="button" class="tab active" id="tabIncy" data-app="incy">INCY</button>
-        <button type="button" class="tab" id="tabHapp" data-app="happ">Happ</button>
+  <main class="page" id="page">
+    <section class="card">
+      <div class="header">
+        <div class="icon-box" id="appBadge">I</div>
+        <div class="header-meta">
+          <h1>GisConnect</h1>
+          <p id="statusSubtitle">Быстрое подключение подписки</p>
+        </div>
       </div>
 
-      <a id="openAppBtn" class="btn btn-primary" href="#">
-        🚀 Добавить подписку в <span id="appNameBtn">INCY</span>
-      </a>
-
-      <button type="button" id="copyBtn" class="btn btn-secondary">
-        📋 Скопировать ссылку подписки
-      </button>
-
-      <div class="divider"></div>
-
-      <p class="step-hint">Ещё не установлено приложение?</p>
-      <a id="downloadBtn" class="btn btn-secondary" href="#" target="_blank" rel="noopener">
-        ⬇️ Скачать <span id="downloadAppName">INCY</span> (<span id="platformName">iPhone</span>)
-      </a>
-
-      <div class="platforms" id="platformPicker">
-        <button type="button" class="plat-btn" data-plat="ios">iPhone / iPad</button>
-        <button type="button" class="plat-btn" data-plat="android">Android</button>
-        <button type="button" class="plat-btn" data-plat="windows">Windows</button>
-        <button type="button" class="plat-btn" data-plat="macos">Mac</button>
+      <div id="emptyBox" class="empty-state hidden">
+        Ссылка подписки не найдена. Вернитесь в Telegram-бот и нажмите кнопку подключения ещё раз.
       </div>
 
-      <div class="url-box" id="rawUrlBox"></div>
-    </div>
+      <div id="controlsBox">
+        <div class="segmented">
+          <button type="button" class="seg-btn active" id="tabIncy" data-app="incy">INCY</button>
+          <button type="button" class="seg-btn" id="tabHapp" data-app="happ">Happ</button>
+        </div>
+
+        <a id="openAppBtn" class="primary-btn" href="#">
+          <span>Открыть в <span id="openAppName">INCY</span></span>
+        </a>
+
+        <button type="button" id="copyBtn" class="secondary-btn">
+          Скопировать ссылку
+        </button>
+
+        <div class="divider"></div>
+
+        <div class="section-label">Скачать приложение</div>
+
+        <div class="platforms" id="platformPicker">
+          <button type="button" class="plat-btn" data-plat="ios">iPhone</button>
+          <button type="button" class="plat-btn" data-plat="android">Android</button>
+          <button type="button" class="plat-btn" data-plat="windows">Windows</button>
+          <button type="button" class="plat-btn" data-plat="macos">Mac</button>
+        </div>
+
+        <a id="downloadBtn" class="secondary-btn" href="#" target="_blank" rel="noopener">
+          Установить <span id="downloadAppName">INCY</span> для <span id="platformName">iPhone</span>
+        </a>
+
+        <div class="key-box" id="rawUrlBox"></div>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -272,7 +345,7 @@
     };
 
     const PLAT_LABELS = {
-      ios: 'iPhone / iPad',
+      ios: 'iPhone',
       android: 'Android',
       windows: 'Windows',
       macos: 'Mac'
@@ -303,7 +376,6 @@
       let app = (getParam('app') || getParam('client') || '').toLowerCase();
       let sub = getParam('sub') || getParam('url') || getParam('key') || getParam('token') || '';
 
-      // Поддержка коротких параметров ?incy=КЛЮЧ или ?happ=КЛЮЧ
       if (!sub && getParam('incy')) {
         app = 'incy';
         sub = getParam('incy');
@@ -332,8 +404,8 @@
 
     function render() {
       if (!state.subUrl) {
-        document.getElementById('errorBox').classList.remove('hidden');
-        document.getElementById('mainContent').classList.add('hidden');
+        document.getElementById('emptyBox').classList.remove('hidden');
+        document.getElementById('controlsBox').classList.add('hidden');
         return;
       }
 
@@ -341,7 +413,7 @@
       const deepLinkUrl = appCfg.deepLink(state.subUrl);
 
       document.getElementById('appBadge').textContent = appCfg.badge;
-      document.getElementById('appNameBtn').textContent = appCfg.name;
+      document.getElementById('openAppName').textContent = appCfg.name;
       document.getElementById('downloadAppName').textContent = appCfg.name;
       document.getElementById('platformName').textContent = PLAT_LABELS[state.platform];
       document.getElementById('openAppBtn').href = deepLinkUrl;
@@ -354,6 +426,11 @@
       document.querySelectorAll('#platformPicker .plat-btn').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset.plat === state.platform);
       });
+    }
+
+    function showMainPage() {
+      document.getElementById('splash').classList.add('hidden');
+      document.getElementById('page').classList.add('visible');
     }
 
     document.getElementById('tabIncy').addEventListener('click', () => {
@@ -377,10 +454,10 @@
       const btn = document.getElementById('copyBtn');
       try {
         await navigator.clipboard.writeText(state.subUrl);
-        btn.textContent = '✅ Ссылка скопирована!';
+        btn.textContent = 'Скопировано';
         setTimeout(() => {
-          btn.textContent = '📋 Скопировать ссылку подписки';
-        }, 2000);
+          btn.textContent = 'Скопировать ссылку';
+        }, 1800);
       } catch (_) {
         prompt('Скопируйте ссылку:', state.subUrl);
       }
@@ -388,11 +465,13 @@
 
     render();
 
-    // Автоматический запуск приложения при открытии ссылки
     if (state.subUrl && state.hasExplicitApp) {
       setTimeout(() => {
         window.location.href = APPS[state.app].deepLink(state.subUrl);
-      }, 150);
+      }, 100);
+      setTimeout(showMainPage, 5000);
+    } else {
+      showMainPage();
     }
   </script>
 </body>
